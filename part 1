@@ -1,0 +1,68 @@
+
+import random
+import time
+
+speed = 0.1
+score = 0
+highscore = 0
+
+#setup the size of the screen
+def setup():
+    size(500, 500)
+    
+#colour of the background 
+#calling the drawings
+def draw():
+    background(0)
+    draw_snake()
+    draw_food()
+
+#creating snake
+def draw_snake():
+    fill(50,205,50)
+    rect(200, 350, 25, 25)
+
+#creating food
+def draw_food():
+    noStroke()
+    fill(255,0,0)
+    ellipse(50,50,25,25)
+    
+#functions for directions
+def go_up():
+    if head.direction != "down":
+        head.direction = "up"
+
+def go_down():
+    if head.direction != "up":
+        head.direction = "down"
+
+def go_left():
+    if head.direction != "right":
+        head.direction = "left"
+
+def go_right():
+    if head.direction != "left":
+        head.direction = "right"
+
+def move():
+    if head.direction == "up":
+        y = head.ycor()
+        head.sety(y + 20)
+
+    if head.direction == "down":
+        y = head.ycor()
+        head.sety(y - 20)
+
+    if head.direction == "left":
+        x = head.xcor()
+        head.setx(x - 20)
+
+    if head.direction == "right":
+        x = head.xcor()
+        head.setx(x + 20)
+    
+wn.onkeypress(go_up, "w")
+wn.onkeypress(go_down, "s")
+wn.onkeypress(go_left, "a")
+wn.onkeypress(go_right, "d")
