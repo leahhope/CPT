@@ -1,10 +1,14 @@
-
 import random
 import time
 
 speed = 0.1
 score = 0
 highscore = 0
+snake = (0,0,0,0)
+x1=200
+x2=25
+y1=25
+y2=25
 
 #setup the size of the screen
 def setup():
@@ -19,8 +23,9 @@ def draw():
 
 #creating snake
 def draw_snake():
+    global x1,y1,x2,y2
     fill(50,205,50)
-    rect(200, 350, 25, 25)
+    rect(x1, y1, x2, y2)
 
 #creating food
 def draw_food():
@@ -28,41 +33,20 @@ def draw_food():
     fill(255,0,0)
     ellipse(50,50,25,25)
     
-#functions for directions
-def go_up():
-    if head.direction != "down":
-        head.direction = "up"
-
-def go_down():
-    if head.direction != "up":
-        head.direction = "down"
-
-def go_left():
-    if head.direction != "right":
-        head.direction = "left"
-
-def go_right():
-    if head.direction != "left":
-        head.direction = "right"
-
-def move():
-    if head.direction == "up":
-        y = head.ycor()
-        head.sety(y + 20)
-
-    if head.direction == "down":
-        y = head.ycor()
-        head.sety(y - 20)
-
-    if head.direction == "left":
-        x = head.xcor()
-        head.setx(x - 20)
-
-    if head.direction == "right":
-        x = head.xcor()
-        head.setx(x + 20)
-    
-wn.onkeypress(go_up, "w")
-wn.onkeypress(go_down, "s")
-wn.onkeypress(go_left, "a")
-wn.onkeypress(go_right, "d")
+ 
+def keyPressed():
+    global x1, y1, x2, y2
+    rect(x1, y1, x2, y2)
+    if (key==CODED):
+        if (keyCode == LEFT):
+            x1=x1-10
+            rect(x1, y1, x2, y2)
+        elif (keyCode== RIGHT):
+            x1=x1+10
+            rect(x1,y1,x2,y2)
+        elif (keyCode== UP):
+            y1=y1-10
+            rect(x1,y1,x2,y2)
+        elif (keyCode== DOWN):
+            y1=y1+10
+            rect(x1,y1,x2,y2)
