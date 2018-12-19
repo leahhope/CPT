@@ -1,3 +1,4 @@
+
 import random
 import time
 
@@ -9,11 +10,13 @@ x1=200
 x2=25
 y1=25
 y2=25
+steps = 0
+sf = 500
 
 #setup the size of the screen
 def setup():
     size(500, 500)
-    
+
 #colour of the background 
 #calling the drawings
 def draw():
@@ -31,9 +34,9 @@ def draw_snake():
 def draw_food():
     noStroke()
     fill(255,0,0)
-    ellipse(50,50,25,25)
+    ellipse(25,25,20,20)
     
-#moving the snake 
+#moving the snake
 def keyPressed():
     global x1, y1, x2, y2
     rect(x1, y1, x2, y2)
@@ -50,3 +53,36 @@ def keyPressed():
         elif (keyCode== DOWN):
             y1=y1+10
             rect(x1,y1,x2,y2)
+            
+#collison
+def keyPressed():
+    global x1, y1, x2, y2, steps
+    steps=steps+1
+    rect(x1, y1, x2, y2)
+    if (key==CODED):
+        if (keyCode == LEFT) and x1>=1:
+            x1=x1-10
+            print(x1)
+            rect(x1,y1,x2,y2)            
+ 
+        elif (keyCode == RIGHT) and x1<=169:
+            x1=x1+10
+            print(x1)
+            rect(x1,y1,x2,y2)
+ 
+        elif (keyCode == UP) and y1>=1:
+            y1=y1-10
+            print(y1)
+            rect(x1,y1,x2,y2)
+ 
+        elif (keyCode == DOWN) and y1<=140:
+            y1=y1+10
+            print(y1)
+            rect(x1,y1,x2,y2)
+ 
+        else:
+            fill(255,255,0)
+            rect(x1,y1,x2,y2)
+
+#random apple appear
+#counter
