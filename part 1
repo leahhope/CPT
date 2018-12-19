@@ -33,7 +33,7 @@ def draw_food():
     fill(255,0,0)
     ellipse(50,50,25,25)
     
- 
+#moving the snake 
 def keyPressed():
     global x1, y1, x2, y2
     rect(x1, y1, x2, y2)
