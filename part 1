@@ -1,5 +1,6 @@
 import random
 import time
+import sys
 
 speed = 0.1
 score = 0
@@ -12,6 +13,8 @@ y2=25
 steps = 0
 sf = 500
 
+
+
 #setup the size of the screen
 def setup():
     size(500, 500)
@@ -20,8 +23,16 @@ def setup():
 #calling the drawings
 def draw():
     background(0)
+    menu()
     draw_snake()
     draw_food()
+
+#creating menu
+def menu():
+    textSize(32);
+    text("WELCOME", 175,250); 
+    fill(255,255,255);
+
 
 #creating snake
 def draw_snake():
@@ -64,7 +75,7 @@ def keyPressed():
             print(x1)
             rect(x1,y1,x2,y2)            
  
-        elif (keyCode == RIGHT) and x1<=480:
+        elif (keyCode == RIGHT) and x1<=470:
             x1=x1+10
             print(x1)
             rect(x1,y1,x2,y2)
@@ -74,14 +85,16 @@ def keyPressed():
             print(y1)
             rect(x1,y1,x2,y2)
  
-        elif (keyCode == DOWN) and y1<=475:
+        elif (keyCode == DOWN) and y1<=465:
             y1=y1+10
             print(y1)
             rect(x1,y1,x2,y2)
- 
+
         else:
             fill(255,255,0)
             rect(x1,y1,x2,y2)
+            print("game over")
+            sys.exit() 
 
 #random apple appear
 #counter
