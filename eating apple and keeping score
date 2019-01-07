@@ -1,1 +1,11 @@
+hp_history = [0]
 
+def inital_score():
+    return hp_history[0]
+
+def cur_score():
+    return hp_histroy[1]
+
+def affect health(delta):
+    hp_history.append(cur_health() + delta)
+    return cur_score()
