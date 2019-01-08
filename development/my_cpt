@@ -38,21 +38,12 @@ def draw_food():
     
 #moving the snake
 def keyPressed():
-    global x1, y1, x2, y2
-    rect(x1, y1, x2, y2)
-    if (key==CODED):
-        if (keyCode == LEFT):
-            x1=x1-10
-            rect(x1, y1, x2, y2)
-        elif (keyCode== RIGHT):
-            x1=x1+10
-            rect(x1,y1,x2,y2)
-        elif (keyCode== UP):
-            y1=y1-10
-            rect(x1,y1,x2,y2)
-        elif (keyCode== DOWN):
-            y1=y1+10
-            rect(x1,y1,x2,y2)
+    global space_pressed, up_pressed
+    print(keyCode)
+    if keyCode == 32:  # space keycode is 32
+        space_pressed = True
+    elif keyCode == 38:  # up arrow
+        up_pressed = True
             
 #collison
 def keyPressed():
