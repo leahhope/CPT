@@ -1,89 +1,88 @@
-import random
-import time
-import sys
+snake test;
+food food1;
+int highScore;
 
-speed = 0.1
-score = 0
-highscore = 0
-snake = (0,0,0,0)
-x1=200
-x2=25
-y1=25
-y2=25
-steps = 0
-sf = 500
+void setup(){
+  size(500, 500);
+  frameRate(10);
+  test = new snake();
+  food1 = new food();
+  rectMode(CENTER);
+  textAlign(CENTER, CENTER);
+  
+  highScore = 0;
+}
 
-#setup the size of the screen
-def setup():
-    size(500, 500)
 
-#colour of the background 
-#calling the drawings
-def draw():
-    background(0)
-    draw_snake()
-    draw_food()
+void draw(){
+  background(0);
+  drawScoreboard();
+  
+  test.move();
+  test.display();
+  food1.display();
+  
+  
+  if( dist(food1.xpos, food1.ypos, test.xpos.get(0), test.ypos.get(0)) < test.sidelen ){
+    food1.reset();
+    test.addLink();
+  }
+  
+  if(test.len > highScore){
+    highScore= test.len;
+  }
+}
 
-#creating snake
-def draw_snake():
-    global x1,y1,x2,y2
-    fill(50,205,50)
-    rect(x1, y1, x2, y2)
 
-#creating food
-def draw_food():
-    noStroke()
-    fill(255,0,0)
-    ellipse(25,25,20,20)
-   
-   class Apple:
-    x = 0
-    y = 0
-    step = 44
-    
-    def _init_(self, x,y):
-        self.x = x * self.step
-        self.y = y * self.step
-        
-    def draw(self, surface, image):
-        surface.blit(image,(self.x, self.y))
-    
-#moving the snake
-def keyPressed():
-    global space_pressed, up_pressed
-    print(keyCode)
-    if keyCode == 32:  # space keycode is 32
-        space_pressed = True
-    elif keyCode == 38:  # up arrow
-        up_pressed = True
-            
-#collison
-def keyPressed():
-    global x1, y1, x2, y2, steps
-    steps=steps+1
-    rect(x1, y1, x2, y2)
-    if (key==CODED):
-        if (keyCode == LEFT) and x1>=1:
-            x1=x1-10
-            print(x1)
-            rect(x1,y1,x2,y2)            
- 
-        elif (keyCode == RIGHT) and x1<=470:
-            x1=x1+10
-            print(x1)
-            rect(x1,y1,x2,y2)
- 
-        elif (keyCode == UP) and y1>=1:
-            y1=y1-10
-            print(y1)
-            rect(x1,y1,x2,y2)
- 
-        elif (keyCode == DOWN) and y1<=465:
-            y1=y1+10
-            print(y1)
-            rect(x1,y1,x2,y2)
+void keyPressed(){
+  if(key == CODED){
+    if(keyCode == LEFT){
+      test.dir = "left";
+    }
+    if(keyCode == RIGHT){
+      test.dir = "right";
+    }
+    if(keyCode == UP){
+      test.dir = "up";
+    }
+    if(keyCode == DOWN){
+      test.dir = "down";
+    }
+  }
+}
 
-        else:
-            fill(255,255,0)
-            rect(x1,y1,x2,y2)
-            text("game over",220,200)
+
+void drawScoreboard(){
+  // All of the scode for code and title
+  
+  fill(255);
+  textSize(20);
+  text( "Snake Game", width/2, 80);
+  fill(250, 0, 250);
+  textSize(20);
+  
+  // draw scoreboard
+  noStroke();
+  fill( 0 );
+  rect(90, 70, 160, 80);
+  fill(255);
+  textSize(17);
+  text( "Score: " + test.len, 70, 50);
+  
+  fill(255);
+  textSize(17);
+  text( "High Score: " + highScore, 70, 70);
+}
+
+class food{
+  
+  // define varibles
+  float xpos, ypos;
+  
+  
+  
+  //constructor
+  food(){
+    xpos = random(100, width - 100);
+    ypos = random(100, height - 100);
+  }
