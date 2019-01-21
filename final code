@@ -1,172 +1,188 @@
-import graphics
-import math
-import random
-    
-main()
+snake test;
+food food1;
+int highScore;
 
-def main():
-  random.seed()
-  win = GraphWin("Snake Game", 1000, 600)
-  update(30)
-  test = snake()
-  food1 = food()
-  #Note: graphics.py draws rectangles given parameters as opposite corner coordinates,
-  #so the pixel values are changed to accomodate that where possible.
-  #rectMode(CENTER);
-  #textAlign(CENTER, CENTER);
-
-  highScore = 0
-  win.setBackground(color_rgb(250, 250, 250))
-  drawScoreboard()
-
-  test.move()
-  test.display()
-  food1.display()
-
-
-  if( dist(food1.xpos, food1.ypos, test.xpos[0], test.ypos[0]) < test.sidelen ):
-    food1.reset()
-    test.addLink()
-
-  if(test.len > highScore):
-    highScore = test.len
-
-### Funcs:
-def keyPressed():
-    key = win.checkKey()
-    if(key == "Left"):
-      test.dir = "left"
-    
-    if(key == "Right"):
-      test.dir = "right"
-    
-    if(key == "Up"):
-        test.dir = "up"
-    
-    if(key == "Down"):
-        test.dir = "down"
-
-def drawScoreboard():
-  #All of the scode for code and title
-  #Note: GraphicWin already displays title as the name of the window
-    Title = Text (Point(width/2, 80),"Snake Game")
-    Title.setSize(20) # setSize(point) : Point is only legal between 5 and 36
-    Title.setTextColor(color_rgb(250, 0, 250))
-    Title.draw(win)
-
-    Credit = Text (Point(width/2, 140),"By: Katherine<3Quinlivan")
-    Credit.setSize(10) # setSize(point) : Point is only legal between 5 and 36
-    Credit.setTextColor(color_rgb(250, 0, 250))
-    Credit.draw(win)
-
-  # draw scoreboard
-    scorebox = Rectangle(Point(10, 30), Point(10+160, 30+80)) #Changed from center value to vertex value
-    scorebox.setOutline(color_rgb(179, 140, 198))
-    scorebox.setFill(color_rgb(255, 0 ,255))
-    scorebox.draw(win)
-    
-    CScore = Text( Point(70, 50),"Score: " + test.len)
-    CScore.setSize(10)
-    CScore.setTextColor(color_rgb(118, 22, 167))
-    CScore.draw(win)
+void setup(){
+  size(500, 500);
+  frameRate(10);
+  test = new snake();
+  food1 = new food();
+  rectMode(CENTER);
+  textAlign(CENTER, CENTER);
   
-    HScore = Text( Point(70, 70),"High Score: " + highScore)
-    HScore.setSize(10)
-    HScore.setTextColor(color_rgb(118, 22, 167))
-    HScore.draw(win)
-
-###### Classes
-class food:
-
-  # define varibles
-  xpos=0.0
-  ypos=0.0
-
-  #constructor
-def __init__(self):
-    xpos = random.randint(100, width - 100)
-    ypos = random.randint(100, height - 100)
+  highScore = 0;
+}
 
 
-  #Fun Funcs
-def display():
-    foo = oval(Point(xpos, ypos),Point(xpos+17,ypos17))
-    foo.setFill(color_rgb(190,0,100))
-    foo.draw(win)
-    
+void draw(){
+  background(0);
+  drawScoreboard();
+  
+  test.move();
+  test.display();
+  food1.display();
+  
+  
+  if( dist(food1.xpos, food1.ypos, test.xpos.get(0), test.ypos.get(0)) < test.sidelen ){
+    food1.reset();
+    test.addLink();
+  }
+  
+  if(test.len > highScore){
+    highScore= test.len;
+  }
+}
 
-def reset():
-    xpos = random.randint(100, width - 100)
-    ypos = random.randint(100, height - 100)
 
-class snake:
+void keyPressed(){
+  if(key == CODED){
+    if(keyCode == LEFT){
+      test.dir = "left";
+    }
+    if(keyCode == RIGHT){
+      test.dir = "right";
+    }
+    if(keyCode == UP){
+      test.dir = "up";
+    }
+    if(keyCode == DOWN){
+      test.dir = "down";
+    }
+  }
+}
 
-  #define varibles
-  len = 0
-  sidelen = 0.0
-  dir = ""
-  xpos = list()
-  ypos = list()
 
-  # constructor
-def __init__(self):
-    len = 1
-    sidelen = 17
-    dir = "right"
-        #xpos = new ArrayList()
-        #ypos = new ArrayList()
-    xpos.append( random(width) )
-    ypos.append( random(height) )
+void drawScoreboard(){
+  // All of the scode for code and title
+  
+  fill(255);
+  textSize(20);
+  text( "Snake Game", width/2, 80);
+  fill(250, 0, 250);
+  textSize(20);
+  
+  // draw scoreboard
+  noStroke();
+  fill( 0 );
+  rect(90, 70, 160, 80);
+  fill(255);
+  textSize(17);
+  text( "Score: " + test.len, 70, 50);
+  
+  fill(255);
+  textSize(17);
+  text( "High Score: " + highScore, 70, 70);
+}
 
-    # Funky Funcs:
-def move():
-    for i in reversed(range(len - 1,0)):
-        xpos[i]= xpos[i - 1]
-        ypos[i]= ypos[i - 1]
-
-    if(dir == "left"):
-        xpos[0]= xpos[0] - sidelen
-     
-    if(dir == "right"):
-        xpos[0]=xpos[0] + sidelen
-
-    if(dir == "up"):
-        ypos[0]= ypos[0] - sidelen
+class food{
+  
+  // define varibles
+  float xpos, ypos;
+  
+  
+  
+  //constructor
+  food(){
+    xpos = random(100, width - 100);
+    ypos = random(100, height - 100);
+  }
+  
+  
+  // functions
+ void display(){
    
-    if(dir == "down"):
-        ypos[0]= ypos[0] - sidelen
+   noStroke();
+   fill(255,0,0);
+   ellipse(xpos, ypos,17,17);
+ }
+ 
+ 
+ void reset(){
+    xpos = random(100, width - 100);
+    ypos = random(100, height - 100);
+ }   
+}
+
+class snake{
+  
+  //define varibles
+  int len;
+  float sidelen;
+  String dir; 
+  ArrayList <Float> xpos, ypos;
+  
+  // constructor
+  snake(){
+    len = 1;
+    sidelen = 17;
+    dir = "right";
+    xpos = new ArrayList();
+    ypos = new ArrayList();
+    xpos.add( random(width) );
+    ypos.add( random(height) );
+  }
+  
+  // functions
+  
+  
+  void move(){
+   for(int i = len - 1; i > 0; i = i -1 ){
+    xpos.set(i, xpos.get(i - 1));
+    ypos.set(i, ypos.get(i - 1));  
+   } 
+   if(dir == "left"){
+     xpos.set(0, xpos.get(0) - sidelen);
+   }
+   if(dir == "right"){
+     xpos.set(0, xpos.get(0) + sidelen);
+   }
    
-    xpos[0]=(xpos[0] + width) % width
-    ypos[0]=(ypos[0] + height) % height
-
-    # check if hit itself and if so cut off the tail
-    if(checkHit() == true):
-        len = 1
-        xtemp = xpos[0]
-        ytemp = ypos.get[0]
-        xpos.clear()
-        ypos.clear()
-        xpos.append(xtemp)
-        ypos.append(ytemp)
-
-def display():
-    for i in range (1,len):
-        rektangle = Rectangle(Point(xpos.get(i), ypos.get(i),Point(xpos.get(i)+sidelen, ypos.get(i)+sidelen)))
-            # yet to be changed, may look funny
-        rektangle.setOutline(color_rgb(179, 140, 198))
-        rektangle.setFill(color_rgb(100, 0, 100)) #opacity not set: map(i-1, 0, len-1, 250, 50));
-        rektangle.draw(win)
-
-def addLink():
-    xpos.append(xpos[len-1] + sidelen)
-    ypos.append(ypos[len-1] + sidelen)
-    len+=1
-
-def dist(x1, y1, x2, y2): 
-    return math.sqrt((x2-x1)**2 + (y2-y1)**2)
-
-def checkHit():
-    for i in range (1,len):
-        if dist(xpos[0], ypos[0], xpos[i], ypos[i]) < sidelen: #dist round into floats
-            return true
-    return false
+   if(dir == "up"){
+     ypos.set(0, ypos.get(0) - sidelen);
+  
+   }
+   
+   if(dir == "down"){
+     ypos.set(0, ypos.get(0) + sidelen);
+   }
+   xpos.set(0, (xpos.get(0) + width) % width);
+   ypos.set(0, (ypos.get(0) + height) % height);
+   
+    // check if hit itself and if so cut off the tail
+    if( checkHit() == true){
+      len = 1;
+      float xtemp = xpos.get(0);
+      float ytemp = ypos.get(0);
+      xpos.clear();
+      ypos.clear();
+      xpos.add(xtemp);
+      ypos.add(ytemp);
+    }
+  }
+  
+  
+  
+  void display(){
+    for(int i = 0; i <len; i++){
+      stroke(0);
+      fill(127,255,0);
+      rect(xpos.get(i), ypos.get(i), sidelen, sidelen);
+    }  
+  }
+  
+  
+  void addLink(){
+    xpos.add( xpos.get(len-1) + sidelen);
+    ypos.add( ypos.get(len-1) + sidelen);
+    len++;
+  }
+  
+   boolean checkHit(){
+    for(int i = 1; i < len; i++){
+     if( dist(xpos.get(0), ypos.get(0), xpos.get(i), ypos.get(i)) < sidelen){
+       return true;
+     } 
+    } 
+    return false;
+   } 
+}
